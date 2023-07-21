@@ -5,7 +5,7 @@ on:
       - opened
 concurrency: 'main'
 jobs:
-  place_order:
+  add_event:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,9 +17,7 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/events.yml
 
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > event.json
-
-      - run: cat event.json
+      - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > new-event.json
 
       - run: node ./read-events.js
 
