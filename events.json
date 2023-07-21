@@ -1,9 +1,1 @@
-{
-  "events": [
-    {
-      "date": "2023-10-12",
-      "title": "GitOpsCon",
-      "attend": "https://example.com"
-    }
-  ]
-}
+{"events":[{"date":"2023-10-12","title":"GitOpsCon","attend":"https://example.com"},{"date":"2023-10-12","title":"GitOpsCon","attend":"https://example.com"}]}
