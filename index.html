@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Events</h1>
+</body>
+<script type="module">
+    const fetchEvents = async () => {
+        try {
+            const res = await fetch("https://raw.githubusercontent.com/niklasmtj/json-events/main/events.json?token=GHSAT0AAAAAAB3HOV4JE3CL4KZORUIIS4RQZF2XTEQ", {
+                mode: "no-cors", // no-cors, *cors, same-origin
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            });
+            // const res = {
+            //     "events": [
+            //         {
+            //             "date": "2023-10-12",
+            //             "title": "GitOpsCon",
+            //             "attend": "https://example.com"
+            //         }
+            //     ]
+            // }
+
+            return res;
+        } catch (e) {
+            console.error(e.message)
+        }
+
+    }
+    const {events} = await fetchEvents()
+    const body = document.querySelector("body");
+    const list = document.createElement("ul");
+    for (const e of events) {
+        for (const k of Object.keys(e)) {
+            const item = document.createElement("li");
+            const text = document.createTextNode(`${k}: ${e[k]}`)
+            item.appendChild(text)
+            list.appendChild(item)
+        }
+    }
+    body.appendChild(list)
+    console.log(body)
+    console.log(events)
+</script>
+
+</html>
