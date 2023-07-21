@@ -14,12 +14,12 @@
     const fetchEvents = async () => {
         try {
             const res = await fetch("https://raw.githubusercontent.com/niklasmtj/json-events/main/events.json", {
-                mode: "no-cors", // no-cors, *cors, same-origin
                 headers: {
                     "Content-Type": "application/json",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
             });
+            const ee = res.json()
             // const res = {
             //     "events": [
             //         {
@@ -30,7 +30,7 @@
             //     ]
             // }
 
-            return res;
+            return ee;
         } catch (e) {
             console.error(e.message)
         }
