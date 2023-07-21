@@ -13,7 +13,7 @@
 <script type="module">
     const fetchEvents = async () => {
         try {
-            const res = await fetch("https://raw.githubusercontent.com/niklasmtj/json-events/main/events.json?token=GHSAT0AAAAAAB3HOV4JE3CL4KZORUIIS4RQZF2XTEQ", {
+            const res = await fetch("https://raw.githubusercontent.com/niklasmtj/json-events/main/events.json", {
                 mode: "no-cors", // no-cors, *cors, same-origin
                 headers: {
                     "Content-Type": "application/json",
