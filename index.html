@@ -14,7 +14,7 @@
     const fetchEvents = async () => {
         try {
             const res = await fetch("https://raw.githubusercontent.com/niklasmtj/json-events/main/events.json", {
-                mode: "no-cors"
+                mode: "no-cors",
                 headers: {
                     "Content-Type": "application/json",
                     // 'Content-Type': 'application/x-www-form-urlencoded',
