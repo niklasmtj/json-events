@@ -6,7 +6,7 @@ title: "[Event]: "
 
 body:
 - type: input
-  id: event_date
+  id: date
   attributes:
     label: Date of the event
     description: In the format DD-MM-YYYY
@@ -14,23 +14,15 @@ body:
     required: true
 
 - type: input
-  id: event_title
+  id: title
   attributes:
     label: Title of the event
   validations:
     required: true
 
 - type: input
-  id: event_attend
+  id: attend
   attributes:
     label: URL to your event
   validations:
     required: true
-
-- type: checkboxes
-  id: acknowledge_issue
-  attributes:
-    label: I acknowledge that the provided information are correct
-    options:
-      - label: Confirm
-        required: true
