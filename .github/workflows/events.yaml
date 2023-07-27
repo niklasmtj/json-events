@@ -6,7 +6,7 @@ on:
 concurrency: 'main'
 jobs:
   add_event:
-    if: contains( github.event.pull_request.labels.*.name, 'event') == false
+    if: contains( github.event.issue.labels.*.name, 'event')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
