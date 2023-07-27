@@ -1,70 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
     <title>JSON Events</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Events</h1>
-</body>
-<script type="module">
+  </body>
+  <script type="module">
     const fetchEvents = async () => {
-        try {
-            const response = await fetch(
-                "https://raw.githubusercontent.com/niklasmtj/json-events/main/events.json",
-                {
-                    mode: "cors",
-                    headers: {
-                        Accept: "application/json",
-                    },
-                }
-            );
+      try {
+        const response = await fetch("./events.json", {
+          mode: "cors",
+          headers: {
+            Accept: "application/json",
+          },
+        });
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch events");
-            }
-
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error("Error:", error.message);
-            // Handle errors here
+        if (!response.ok) {
+          throw new Error("Failed to fetch events");
         }
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error:", error.message);
+        // Handle errors here
+      }
+    };
+
+    const parseEvents = (events) => {
+      const ee = [];
+      for (const e of events) {
+        ee.push(parseEvent(e));
+      }
+      return ee;
+    };
+
+    const parseEvent = (event) => {
+      const e = {};
+      for (const key of Object.keys(event)) {
+        let v = event[key];
+        if (key === "date") {
+          v = new Date(event[key]);
+        }
+        e[key] = v;
+      }
+      return e;
+    };
+
+    const sortByDate = (events) => {
+      return events.sort((a, b) => a.date - b.date);
     };
 
     const renderList = async () => {
-        const {events} = await fetchEvents();
-        if (!events.length) return;
-        const body = document.querySelector("body");
-        const scripts = document.querySelectorAll("script");
-        const table = document.createElement("table");
+      const { events } = await fetchEvents();
+      if (!events.length) return;
+      const ee = parseEvents(events);
+      const sortedEvents = sortByDate(ee);
+      const body = document.querySelector("body");
+      const scripts = document.querySelectorAll("script");
+      const table = document.createElement("table");
 
-        const tHeader = Object.keys(events[0]);
-        const headerRow = document.createElement("tr");
-        for (const header of tHeader) {
-            const tableHeader = document.createElement("th");
-            tableHeader.innerText = header;
-            headerRow.appendChild(tableHeader);
-        }
-        table.appendChild(headerRow);
+      const tHeader = Object.keys(events[0]);
+      const headerRow = document.createElement("tr");
+      for (const header of tHeader) {
+        const tableHeader = document.createElement("th");
+        tableHeader.innerText = header;
+        headerRow.appendChild(tableHeader);
+      }
+      table.appendChild(headerRow);
 
-        for (const event of events) {
-            const tableRow = document.createElement("tr");
-            for (const attribute of Object.keys(event)) {
-                const item = document.createElement("td");
-                item.innerText = event[attribute];
-                tableRow.appendChild(item);
-            }
-            table.appendChild(tableRow);
+      for (const event of sortedEvents) {
+        const tableRow = document.createElement("tr");
+        for (const attribute of Object.keys(event)) {
+          const item = document.createElement("td");
+          item.innerText =
+            attribute === "date"
+              ? event[attribute].toLocaleDateString()
+              : event[attribute];
+          tableRow.appendChild(item);
         }
-        body.insertBefore(table, scripts[0]);
+        table.appendChild(tableRow);
+      }
+      body.insertBefore(table, scripts[0]);
     };
 
     renderList();
-</script>
-
+  </script>
 </html>
