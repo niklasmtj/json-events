@@ -3,7 +3,8 @@ on:
   issues:
     types:
       - opened
-concurrency: 'main'
+      - edited
+concurrency: "main"
 jobs:
   add_event:
     if: contains( github.event.issue.labels.*.name, 'event')
